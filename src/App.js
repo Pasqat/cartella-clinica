@@ -15,9 +15,9 @@ const initialState = {
 };
 
 function App() {
-  const [state, setState] = useState(initialState);
+  // const [state, setState] = useState(initialState);
 
-  const { user } = state;
+  // const { user } = state;
 
   return (
     <MuiThemeProvider>
