@@ -1,25 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+
+import { MuiThemeProvider } from "@material-ui/core/styles";
+
+import { CssBaseline } from "@material-ui/core";
+
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+
+import AddPatientForm from "./components/AddPatientForm/AddPatientForm";
+import Bar from "./components/Bar/Bar";
+
+const initialState = {
+  // theme: appearance.defaultTheme,
+  user: null,
+};
 
 function App() {
+  const [state, setState] = useState(initialState);
+
+  const { user } = state;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <MuiThemeProvider>
+      <CssBaseline />
+      <BrowserRouter>
+        <Bar />
+        <Switch>
+          <Route path="/newpatient" exact>
+            <AddPatientForm />
+          </Route>
+        </Switch>
+      </BrowserRouter>
+    </MuiThemeProvider>
   );
 }
 
