@@ -2,24 +2,34 @@ import React from "react";
 
 import { DatePicker } from "formik-material-ui-pickers";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import { Link } from "react-router-dom";
 
 import DateFnsUtils from "@date-io/date-fns";
 
 import { Formik, Form, Field } from "formik";
-import { Button, LinearProgress, Container, Box } from "@material-ui/core";
+
+import {
+  Button,
+  LinearProgress,
+  Container,
+  Box,
+  ButtonGroup,
+  Grid,
+} from "@material-ui/core";
+
 import { TextField } from "formik-material-ui";
 
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
   textArea: {
     // width: "40%",
     // margin: "5px 5px 0 0"
-  }
-})
+  },
+});
 
 const AddPatientForm = () => {
-  const classes = useStyles()
+  const classes = useStyles();
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -153,14 +163,28 @@ const AddPatientForm = () => {
               </Box>
               <Box display="flex" flexGrow={1} paddingTop={1}></Box>
               <br />
-              <Button
-                variant="contained"
-                color="primary"
-                disabled={isSubmitting}
-                onClick={submitForm}
-              >
-                Invia
-              </Button>
+              <Grid container alignItems="center" justify="flex-end">
+                <ButtonGroup variant="contained">
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    disabled={isSubmitting}
+                    onClick={submitForm}
+                    component={Link}
+                    to="/"
+                  >
+                    Annulla
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    disabled={isSubmitting}
+                    onClick={submitForm}
+                  >
+                    Invia
+                  </Button>
+                </ButtonGroup>
+              </Grid>
             </Container>
           </Form>
         )}

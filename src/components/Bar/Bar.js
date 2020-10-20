@@ -27,10 +27,8 @@ const Bar = () => {
             </Link>
           </Typography>
         </Box>
-        <Button color="inherit" variant="outlined">
-          <Link color="inherit" component={RouterLink} to="/newpatient">
+        <Button color="inherit" variant="outlined" component={RouterLink} to="/newpatient">
             Aggiungi Paziente
-          </Link>
         </Button>
       </Toolbar>
     </AppBar>
