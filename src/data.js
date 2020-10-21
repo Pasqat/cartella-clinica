@@ -21,10 +21,12 @@ export const test = [
     firstName: "Pasquale",
     lastName: "Matarrese",
     birthDay: "1987-05-05T16:38:00.000Z",
+    out: {},
     continuousInfusion: [
       {
         name: "propofol 1%",
         signedBy: "AP",
+        intake: {},
         8: false,
         12: true,
         16: false,
