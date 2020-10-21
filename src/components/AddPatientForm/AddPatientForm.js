@@ -1,12 +1,15 @@
 import React from "react";
+import { useState } from "react";
 
-import { DatePicker } from "formik-material-ui-pickers";
 import DateFnsUtils from "@date-io/date-fns";
-import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import {
+  MuiPickersUtilsProvider,
+  DatePicker,
+} from "@material-ui/pickers";
 
 import { Link } from "react-router-dom";
 
-import { Formik, Form, Field, FieldArray } from "formik";
+import { useForm, Controller } from "react-hook-form";
 
 import {
   Button,
@@ -15,81 +18,63 @@ import {
   Box,
   ButtonGroup,
   Grid,
+  TextField,
 } from "@material-ui/core";
 
-import { TextField } from "formik-material-ui";
-
-import AdministrationFieldArray from "../AdministrationFieldArray/AdministrationsFieldArray";
-
+// import AdministrationFieldArray from "../AdministrationFieldArray/AdministrationsFieldArray";
 
 const AddPatientForm = () => {
+  const { register, handleSubmit, control } = useForm();
+  const [isSubmitting, setSubmitting] = useState(false);
+
+  const initialValues = {
+    birthDate: null
+  }
+
+  const onSubmit = (data) => {
+    setSubmitting(true);
+    setTimeout(() => {
+      setSubmitting(false);
+      alert(JSON.stringify(data, null, 2));
+    }, 500);
+  };
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <Formik
-        initialValues={{
-          firstName: "",
-          lastName: "",
-          birthDay: "",
-          continuousInfusion: ["test","test2"],
-          intravenous: ["test3"],
-          iM: [],
-          sC: [],
-          oral: [],
-          aerosol: [],
-          other: [],
-        }}
-        validate={(values) => {
-          const errors = {};
-          if (!values.firstName) {
-            errors.firstName = "Obbligatorio";
-          } else if (!values.lastName) {
-            errors.lastName = "Obbligatorio";
-          } else if (!values.birthDay) {
-            errors.birthDay = "Obbligatorio";
-          }
-          return errors;
-        }}
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            setSubmitting(false);
-            alert(JSON.stringify(values, null, 2));
-          }, 500);
-        }}
-      >
-        {({ submitForm, isSubmitting, values }) => (
-          <Form>
-            {console.log("render")}
-            {isSubmitting && <LinearProgress color="secondary" />}
-            <Container>
-              <Box
-                display="flex"
-                flexGrow={1}
-                paddingTop={1}
-              >
-                <Field
-                  component={TextField}
-                  name="firstName"
-                  type="text"
-                  label="Nome"
-                />
-                <Field
-                  component={TextField}
-                  name="lastName"
-                  type="text"
-                  label="Cognome"
-                />
-                <Field
-                  component={DatePicker}
-                  name="birthDay"
-                  label="Data di Nascita"
-                  disableFuture
-                  openTo="year"
-                  format="dd/MM/yyyy"
-                  views={["year", "month", "date"]}
-                />
-              </Box>
-              <Box display="flex" flexGrow={1} marginTop={5} flexWrap="wrap">
+      <form onSubmit={handleSubmit((data) => onSubmit(data))}>
+        {console.log("render")}
+        {isSubmitting && <LinearProgress color="secondary" />}
+        <Container>
+          <Box display="flex" flexGrow={1} paddingTop={1}>
+            <TextField
+              name="firstName"
+              type="text"
+              label="Nome"
+              required
+              inputRef={register}
+            />
+            <TextField
+              name="lastName"
+              type="text"
+              label="Cognome"
+              required
+              inputRef={register}
+            />
+            <Controller
+              as={DatePicker}
+              control={control}
+              label="Data di Nascita"
+              name="birthDay"
+              disableFuture
+              openTo="year"
+              format="dd/MM/yyyy"
+              views={["year", "month", "date"]}
+              required
+              defaultValue={initialValues.birthDate}
+            />
+            {console.log(control)}
+          </Box>
+          {/* <Box display="flex" flexGrow={1} marginTop={5} flexWrap="wrap">
                 <AdministrationFieldArray
                   name="continuousInfusion"
                   label="Infusione Continua"
@@ -120,35 +105,33 @@ const AddPatientForm = () => {
                   label="Altro"
                   values={values}
                 />
-              </Box>
-              <Box display="flex" flexGrow={1} paddingTop={1}></Box>
-              <br />
-              <Grid container alignItems="center" justify="flex-end">
-                <ButtonGroup variant="contained">
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    disabled={isSubmitting}
-                    onClick={submitForm}
-                    component={Link}
-                    to="/"
-                  >
-                    Annulla
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    disabled={isSubmitting}
-                    onClick={submitForm}
-                  >
-                    Invia
-                  </Button>
-                </ButtonGroup>
-              </Grid>
-            </Container>
-          </Form>
-        )}
-      </Formik>
+              </Box> */}
+          <Box display="flex" flexGrow={1} paddingTop={1}></Box>
+          <br />
+          <Grid container alignItems="center" justify="flex-end">
+            <ButtonGroup variant="contained">
+              <Button
+                variant="contained"
+                color="secondary"
+                disabled={isSubmitting}
+                component={Link}
+                to="/"
+              >
+                Annulla
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                disabled={isSubmitting}
+                type="submit"
+              >
+                Invia
+              </Button>
+            </ButtonGroup>
+          </Grid>
+        </Container>
+      </form>
+      )}
     </MuiPickersUtilsProvider>
   );
 };
