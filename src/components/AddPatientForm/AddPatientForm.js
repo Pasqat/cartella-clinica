@@ -9,6 +9,8 @@ import { Link } from "react-router-dom";
 
 import { useForm, Controller } from "react-hook-form";
 
+import { useHistory } from 'react-router-dom'
+
 import {
   Button,
   LinearProgress,
@@ -27,9 +29,11 @@ const useStyles = makeStyles({
   },
 });
 
-const AddPatientForm = () => {
+const AddPatientForm = ({setPatients}) => {
   const { register, handleSubmit, control, getValues, setValue } = useForm();
   const [isSubmitting, setSubmitting] = useState(false);
+
+  const history = useHistory()
 
   const classes = useStyles();
 
@@ -40,10 +44,8 @@ const AddPatientForm = () => {
 
   const onSubmit = (data) => {
     setSubmitting(true);
-    setTimeout(() => {
-      setSubmitting(false);
-      alert(JSON.stringify(data, null, 2));
-    }, 500);
+    setPatients(state => state.concat(data))
+    history.push("/")
   };
 
   return (
