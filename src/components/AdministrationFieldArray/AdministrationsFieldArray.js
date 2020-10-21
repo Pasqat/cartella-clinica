@@ -10,9 +10,10 @@ import { useFieldArray } from "react-hook-form";
 
 const useStyles = makeStyles({
   root: {
-    minWidth: 300,
-    margin: 10,
-  },
+    minWidth: 325,
+    marginTop: 10,
+    marginRight: 10,
+ },
   title: {
     fontSize: 14,
   },

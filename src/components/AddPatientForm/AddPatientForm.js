@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 
 import DateFnsUtils from "@date-io/date-fns";
+import itLocale from "date-fns/locale/it";
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 
 import { Link } from "react-router-dom";
@@ -16,15 +17,25 @@ import {
   ButtonGroup,
   Grid,
   TextField,
+  makeStyles,
 } from "@material-ui/core";
 import AdministrationsFieldArray from "../AdministrationFieldArray/AdministrationsFieldArray";
+
+const useStyles = makeStyles({
+  administrationContainer: {
+    marginTop: 35,
+  },
+});
 
 const AddPatientForm = () => {
   const { register, handleSubmit, control, getValues, setValue } = useForm();
   const [isSubmitting, setSubmitting] = useState(false);
 
+  const classes = useStyles();
+
   const initialValues = {
     birthDate: null,
+    other: [],
   };
 
   const onSubmit = (data) => {
@@ -36,11 +47,11 @@ const AddPatientForm = () => {
   };
 
   return (
-    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+    <MuiPickersUtilsProvider utils={DateFnsUtils} locale={itLocale}>
       <form onSubmit={handleSubmit((data) => onSubmit(data))}>
         {isSubmitting && <LinearProgress color="secondary" />}
         <Container>
-          <Box display="flex" flexGrow={1} paddingTop={1}>
+          <Box display="flex" flexGrow={1} paddingTop={1} justifyContent="center">
             <TextField
               name="firstName"
               type="text"
@@ -68,7 +79,7 @@ const AddPatientForm = () => {
               defaultValue={initialValues.birthDate}
             />
           </Box>
-          <Box display="flex" flexGrow={1} marginTop={5} flexWrap="wrap">
+          <Grid container spacing={2} className={classes.administrationContainer} justify="center">
             <AdministrationsFieldArray
               {...{ control, register, getValues, setValue }}
               name="continuousInfusion"
@@ -98,8 +109,9 @@ const AddPatientForm = () => {
               {...{ control, register, getValues, setValue }}
               name="other"
               label="Altro"
+              defaultValue={initialValues.other}
             />
-          </Box>
+          </Grid>
           <br />
           <Grid container alignItems="center" justify="flex-end">
             <ButtonGroup variant="contained">
