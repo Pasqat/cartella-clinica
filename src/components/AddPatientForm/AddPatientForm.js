@@ -1,12 +1,12 @@
 import React from "react";
 
 import { DatePicker } from "formik-material-ui-pickers";
+import DateFnsUtils from "@date-io/date-fns";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+
 import { Link } from "react-router-dom";
 
-import DateFnsUtils from "@date-io/date-fns";
-
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, FieldArray } from "formik";
 
 import {
   Button,
@@ -20,6 +20,8 @@ import {
 import { TextField } from "formik-material-ui";
 
 import { makeStyles } from "@material-ui/core/styles";
+
+import AdministrationFieldArray from "../AdministrationFieldArray/AdministrationsFieldArray";
 
 const useStyles = makeStyles({
   textArea: {
@@ -38,13 +40,13 @@ const AddPatientForm = () => {
           firstName: "",
           lastName: "",
           birthDay: "",
-          continuousInfusion: "",
-          intravenous: "",
-          iM: "",
-          sC: "",
-          oral: "",
-          aerosol: "",
-          other: "",
+          continuousInfusion: [],
+          intravenous: [],
+          iM: [],
+          sC: [],
+          oral: [],
+          aerosol: [],
+          other: [],
         }}
         validate={(values) => {
           const errors = {};
@@ -61,11 +63,12 @@ const AddPatientForm = () => {
           setTimeout(() => {
             setSubmitting(false);
             alert(JSON.stringify(values, null, 2));
-          }, 3500);
+          }, 500);
         }}
       >
-        {({ submitForm, isSubmitting }) => (
+        {({ submitForm, isSubmitting, values }) => (
           <Form>
+            {console.log("render")}
             {isSubmitting && <LinearProgress color="secondary" />}
             <Container>
               <Box
@@ -97,68 +100,35 @@ const AddPatientForm = () => {
                 />
               </Box>
               <Box display="flex" flexGrow={1} paddingTop={1} flexWrap="wrap">
-                <Field
-                  component={TextField}
+                <AdministrationFieldArray
                   name="continuousInfusion"
-                  type="text"
                   label="Infusione Continua"
-                  multiline={true}
-                  rows={3}
-                  className={classes.textArea}
+                  values={values.continuousInfusion}
                 />
-                <Field
-                  component={TextField}
+                <AdministrationFieldArray
                   name="intravenous"
-                  type="text"
                   label="Endovena"
-                  multiline={true}
-                  rows={3}
-                  className={classes.textArea}
+                  values={values.intravenous}
                 />
-                <Field
-                  component={TextField}
+                <AdministrationFieldArray
                   name="iM"
-                  type="text"
                   label="I.M."
-                  multiline={true}
-                  rows={3}
-                  className={classes.textArea}
+                  values={values.iM}
                 />
-                <Field
-                  component={TextField}
+                <AdministrationFieldArray
                   name="sC"
-                  type="text"
                   label="S.C."
-                  multiline={true}
-                  rows={3}
-                  className={classes.textArea}
+                  values={values.sC}
                 />
-                <Field
-                  component={TextField}
+                <AdministrationFieldArray
                   name="oral"
-                  type="text"
                   label="Orale"
-                  multiline={true}
-                  rows={3}
-                  className={classes.textArea}
+                  values={values.oral}
                 />
-                <Field
-                  component={TextField}
-                  name="aerosol"
-                  type="text"
-                  label="Aerosol"
-                  multiline={true}
-                  rows={3}
-                  className={classes.textArea}
-                />
-                <Field
-                  component={TextField}
+                <AdministrationFieldArray
                   name="other"
-                  type="text"
                   label="Altro"
-                  multiline={true}
-                  rows={3}
-                  className={classes.textArea}
+                  values={values.other}
                 />
               </Box>
               <Box display="flex" flexGrow={1} paddingTop={1}></Box>
