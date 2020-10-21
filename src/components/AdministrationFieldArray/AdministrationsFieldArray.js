@@ -6,6 +6,7 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 
+import { useFieldArray } from "react-hook-form";
 
 const useStyles = makeStyles({
   root: {
@@ -23,45 +24,53 @@ const useStyles = makeStyles({
   },
 });
 
-const AdministrationsFieldArray = ({ values, label, name }) => {
+const AdministrationsFieldArray = ({
+  values,
+  label,
+  name,
+  control,
+  register,
+  setValue,
+  getValue,
+}) => {
   const classes = useStyles();
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "test",
+  });
 
   return (
     <Card className={classes.root}>
-      <FieldArray name={name} key={name}>
-        {(arrayHelpers) => (
-          <CardContent >
-            <InputLabel className={classes.pos}>{label}</InputLabel>
+      <CardContent>
+        <InputLabel className={classes.pos}>{label}</InputLabel>
 
-            {values[name].map((item, index) => (
-              <div key={index}>
-                {console.log(name, item, index)}
-                <Field
-                  name={`${name}.${index}`}
-                  component={TextField}
-                  type="text"
-                />
-                <Button
-                  type="button"
-                  color="secondary"
-                  onClick={() => arrayHelpers.remove(index)} // * remove the item
-                >
-                  -
-                </Button>
-              </div>
-            ))}
-            <CardActions>
-              <Button
-                className={classes.button}
-                size="small"
-                onClick={() => arrayHelpers.push("")} // * insert empty string
-              >
-                Aggiungi
-              </Button>
-            </CardActions>
-          </CardContent>
-        )}
-      </FieldArray>
+        {fields.map((item, index) => (
+          <div key={item.id}>
+            {console.log(name, item, index)}
+            <TextField
+              name={`${name}[${index}].name`}
+              inputRef={register}
+              type="text"
+            />
+            <Button
+              type="button"
+              color="secondary"
+              onClick={() => remove(index)} // * remove the item
+            >
+              -
+            </Button>
+          </div>
+        ))}
+        <CardActions>
+          <Button
+            className={classes.button}
+            size="small"
+            onClick={() => append({name: append})} // * insert empty string
+          >
+            Aggiungi
+          </Button>
+        </CardActions>
+      </CardContent>
     </Card>
   );
   // return(

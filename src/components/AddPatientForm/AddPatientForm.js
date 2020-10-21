@@ -2,10 +2,7 @@ import React from "react";
 import { useState } from "react";
 
 import DateFnsUtils from "@date-io/date-fns";
-import {
-  MuiPickersUtilsProvider,
-  DatePicker,
-} from "@material-ui/pickers";
+import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 
 import { Link } from "react-router-dom";
 
@@ -20,16 +17,17 @@ import {
   Grid,
   TextField,
 } from "@material-ui/core";
+import AdministrationsFieldArray from "../AdministrationFieldArray/AdministrationsFieldArray";
 
 // import AdministrationFieldArray from "../AdministrationFieldArray/AdministrationsFieldArray";
 
 const AddPatientForm = () => {
-  const { register, handleSubmit, control } = useForm();
+  const { register, handleSubmit, control, getValues, setValue } = useForm();
   const [isSubmitting, setSubmitting] = useState(false);
 
   const initialValues = {
-    birthDate: null
-  }
+    birthDate: null,
+  };
 
   const onSubmit = (data) => {
     setSubmitting(true);
@@ -74,38 +72,38 @@ const AddPatientForm = () => {
             />
             {console.log(control)}
           </Box>
-          {/* <Box display="flex" flexGrow={1} marginTop={5} flexWrap="wrap">
-                <AdministrationFieldArray
-                  name="continuousInfusion"
-                  label="Infusione Continua"
-                  values={values}
-                />
-                <AdministrationFieldArray
-                  name="intravenous"
-                  label="Endovena"
-                  values={values}
-                />
-                <AdministrationFieldArray
-                  name="iM"
-                  label="I.M."
-                  values={values}
-                />
-                <AdministrationFieldArray
-                  name="sC"
-                  label="S.C."
-                  values={values}
-                />
-                <AdministrationFieldArray
-                  name="oral"
-                  label="Orale"
-                  values={values}
-                />
-                <AdministrationFieldArray
-                  name="other"
-                  label="Altro"
-                  values={values}
-                />
-              </Box> */}
+          <Box display="flex" flexGrow={1} marginTop={5} flexWrap="wrap">
+            <AdministrationsFieldArray
+              {...{ control, register, getValues, setValue }}
+              name="continuousInfusion"
+              label="Infusione Continua"
+            />
+            <AdministrationsFieldArray
+              {...{ control, register, getValues, setValue }}
+              name="intravenous"
+              label="Endovena"
+            />
+            <AdministrationsFieldArray
+              {...{ control, register, getValues, setValue }}
+              name="iM"
+              label="I.M."
+            />
+            <AdministrationsFieldArray
+              {...{ control, register, getValues, setValue }}
+              name="sC"
+              label="S.C."
+            />
+            <AdministrationsFieldArray
+              {...{ control, register, getValues, setValue }}
+              name="oral"
+              label="Orale"
+            />
+            <AdministrationsFieldArray
+              {...{ control, register, getValues, setValue }}
+              name="other"
+              label="Altro"
+            />
+          </Box>
           <Box display="flex" flexGrow={1} paddingTop={1}></Box>
           <br />
           <Grid container alignItems="center" justify="flex-end">
@@ -130,6 +128,7 @@ const AddPatientForm = () => {
             </ButtonGroup>
           </Grid>
         </Container>
+        <div>{register}</div>
       </form>
       )}
     </MuiPickersUtilsProvider>
