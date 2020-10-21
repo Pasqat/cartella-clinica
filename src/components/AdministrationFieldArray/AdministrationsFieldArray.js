@@ -2,31 +2,45 @@ import React from "react";
 
 import { FieldArray, Field } from "formik";
 
-import { Button, TextField, InputLabel } from "@material-ui/core";
+import { InputLabel, makeStyles } from "@material-ui/core";
+import {  TextField } from "formik-material-ui";
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import Button from "@material-ui/core/Button";
+
+const useStyles = makeStyles({
+  root: {
+    minWidth: 300,
+    margin: 10,
+  },
+  title: {
+    fontSize: 14,
+  },
+  pos: {
+    marginBottom: 12,
+  },
+  button: {
+    marginLeft: "auto",
+  },
+});
 
 const AdministrationsFieldArray = ({ values, label, name }) => {
+  const classes = useStyles();
   return (
-    <FieldArray name={name}>
-      {(arrayHelpers) => (
-        <div>
-          <InputLabel>{label}</InputLabel>
-          <Button
-            color="primary"
-            type="button"
-            size="small"
-            variant="contained"
-            onClick={() => arrayHelpers.push( "")} // * insert empty string
-          >
-            +
-          </Button>
+    <Card className={classes.root}>
+      <FieldArray name={name} key={name}>
+        {(arrayHelpers) => (
+          <CardContent >
+            <InputLabel className={classes.pos}>{label}</InputLabel>
 
-           { values.map((item, index) => (
+            {values[name].map((item, index) => (
               <div key={index}>
-                {console.log(name, item)}
+                {console.log(name, item, index)}
                 <Field
                   name={`${name}.${index}`}
                   component={TextField}
-                  value={item}
+                  type="text"
                 />
                 <Button
                   type="button"
@@ -36,12 +50,20 @@ const AdministrationsFieldArray = ({ values, label, name }) => {
                   -
                 </Button>
               </div>
-            ))
-           }
-
-        </div>
-      )}
-    </FieldArray>
+            ))}
+            <CardActions>
+              <Button
+                className={classes.button}
+                size="small"
+                onClick={() => arrayHelpers.push("")} // * insert empty string
+              >
+                Aggiungi
+              </Button>
+            </CardActions>
+          </CardContent>
+        )}
+      </FieldArray>
+    </Card>
   );
   // return(
   //   <div>ciao</div>

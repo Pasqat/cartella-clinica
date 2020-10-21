@@ -19,19 +19,10 @@ import {
 
 import { TextField } from "formik-material-ui";
 
-import { makeStyles } from "@material-ui/core/styles";
-
 import AdministrationFieldArray from "../AdministrationFieldArray/AdministrationsFieldArray";
 
-const useStyles = makeStyles({
-  textArea: {
-    // width: "40%",
-    // margin: "5px 5px 0 0"
-  },
-});
 
 const AddPatientForm = () => {
-  const classes = useStyles();
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -40,8 +31,8 @@ const AddPatientForm = () => {
           firstName: "",
           lastName: "",
           birthDay: "",
-          continuousInfusion: [],
-          intravenous: [],
+          continuousInfusion: ["test","test2"],
+          intravenous: ["test3"],
           iM: [],
           sC: [],
           oral: [],
@@ -74,7 +65,6 @@ const AddPatientForm = () => {
               <Box
                 display="flex"
                 flexGrow={1}
-                // justifyContent="space-between"
                 paddingTop={1}
               >
                 <Field
@@ -99,36 +89,36 @@ const AddPatientForm = () => {
                   views={["year", "month", "date"]}
                 />
               </Box>
-              <Box display="flex" flexGrow={1} paddingTop={1} flexWrap="wrap">
+              <Box display="flex" flexGrow={1} marginTop={5} flexWrap="wrap">
                 <AdministrationFieldArray
                   name="continuousInfusion"
                   label="Infusione Continua"
-                  values={values.continuousInfusion}
+                  values={values}
                 />
                 <AdministrationFieldArray
                   name="intravenous"
                   label="Endovena"
-                  values={values.intravenous}
+                  values={values}
                 />
                 <AdministrationFieldArray
                   name="iM"
                   label="I.M."
-                  values={values.iM}
+                  values={values}
                 />
                 <AdministrationFieldArray
                   name="sC"
                   label="S.C."
-                  values={values.sC}
+                  values={values}
                 />
                 <AdministrationFieldArray
                   name="oral"
                   label="Orale"
-                  values={values.oral}
+                  values={values}
                 />
                 <AdministrationFieldArray
                   name="other"
                   label="Altro"
-                  values={values.other}
+                  values={values}
                 />
               </Box>
               <Box display="flex" flexGrow={1} paddingTop={1}></Box>
