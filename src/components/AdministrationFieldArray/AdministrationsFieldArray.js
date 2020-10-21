@@ -36,7 +36,7 @@ const AdministrationsFieldArray = ({
   const classes = useStyles();
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "test",
+    name: name,
   });
 
   return (
@@ -46,12 +46,13 @@ const AdministrationsFieldArray = ({
 
         {fields.map((item, index) => (
           <div key={item.id}>
-            {console.log(name, item, index)}
+
             <TextField
               name={`${name}[${index}].name`}
               inputRef={register}
               type="text"
             />
+
             <Button
               type="button"
               color="secondary"
@@ -59,23 +60,25 @@ const AdministrationsFieldArray = ({
             >
               -
             </Button>
+
           </div>
         ))}
         <CardActions>
+
           <Button
             className={classes.button}
             size="small"
-            onClick={() => append({name: append})} // * insert empty string
+            onClick={() => append({ name: append })} // * insert empty string
           >
             Aggiungi
           </Button>
+
         </CardActions>
+
       </CardContent>
+
     </Card>
   );
-  // return(
-  //   <div>ciao</div>
-  // )
 };
 
 export default AdministrationsFieldArray;

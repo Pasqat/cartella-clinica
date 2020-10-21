@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { MuiThemeProvider } from "@material-ui/core/styles";
 
@@ -9,14 +9,13 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import AddPatientForm from "./components/AddPatientForm/AddPatientForm";
 import Bar from "./components/Bar/Bar";
 
-const initialState = {
-  // theme: appearance.defaultTheme,
-  user: null,
-};
+// const initialState = {
+//   theme: appearance.defaultTheme,
+//   user: null,
+// };
 
 function App() {
   // const [state, setState] = useState(initialState);
-
   // const { user } = state;
 
   return (

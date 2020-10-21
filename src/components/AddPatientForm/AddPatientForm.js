@@ -19,8 +19,6 @@ import {
 } from "@material-ui/core";
 import AdministrationsFieldArray from "../AdministrationFieldArray/AdministrationsFieldArray";
 
-// import AdministrationFieldArray from "../AdministrationFieldArray/AdministrationsFieldArray";
-
 const AddPatientForm = () => {
   const { register, handleSubmit, control, getValues, setValue } = useForm();
   const [isSubmitting, setSubmitting] = useState(false);
@@ -40,7 +38,6 @@ const AddPatientForm = () => {
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <form onSubmit={handleSubmit((data) => onSubmit(data))}>
-        {console.log("render")}
         {isSubmitting && <LinearProgress color="secondary" />}
         <Container>
           <Box display="flex" flexGrow={1} paddingTop={1}>
@@ -70,7 +67,6 @@ const AddPatientForm = () => {
               required
               defaultValue={initialValues.birthDate}
             />
-            {console.log(control)}
           </Box>
           <Box display="flex" flexGrow={1} marginTop={5} flexWrap="wrap">
             <AdministrationsFieldArray
@@ -104,7 +100,6 @@ const AddPatientForm = () => {
               label="Altro"
             />
           </Box>
-          <Box display="flex" flexGrow={1} paddingTop={1}></Box>
           <br />
           <Grid container alignItems="center" justify="flex-end">
             <ButtonGroup variant="contained">
@@ -128,9 +123,7 @@ const AddPatientForm = () => {
             </ButtonGroup>
           </Grid>
         </Container>
-        <div>{register}</div>
       </form>
-      )}
     </MuiPickersUtilsProvider>
   );
 };
